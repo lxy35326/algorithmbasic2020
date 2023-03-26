@@ -71,7 +71,7 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 			return new Node(root.val, de(root.left));
 		}
 
-		public List<Node> de(TreeNode root) {
+		public List<Node> de(TreeNode root) { 
 			List<Node> children = new ArrayList<>();
 			while (root != null) {
 				Node cur = new Node(root.val, de(root.left));

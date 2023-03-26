@@ -250,20 +250,26 @@ public class Code02_SerializeAndReconstructTree {
 		int maxValue = 100;
 		int testTimes = 1000000;
 		System.out.println("test begin");
-		for (int i = 0; i < testTimes; i++) {
-			Node head = generateRandomBST(maxLevel, maxValue);
-			Queue<String> pre = preSerial(head);
-			Queue<String> in = inSerial(head);
-			Queue<String> pos = posSerial(head);
-			Queue<String> level = levelSerial(head);
-			Node preBuild = buildByPreQueue(pre);
-			Node posBuild = buildByPosQueue(pos);
-//			Node inBuild = buildByInQueue(pos);
-			Node levelBuild = buildByLevelQueue(level);
-			if (!isSameValueStructure(preBuild, posBuild) || !isSameValueStructure(posBuild, levelBuild)) {
-				System.out.println("Oops!");
-			}
+		for (int i = 0; i < 10; i++) {
+			Node head = generateRandomBST(maxLevel,maxValue);
+			printTree(head);
+
 		}
+
+//		for (int i = 0; i < testTimes; i++) {
+//			Node head = generateRandomBST(maxLevel, maxValue);
+//			Queue<String> pre = preSerial(head);
+//			Queue<String> in = inSerial(head);
+//			Queue<String> pos = posSerial(head);
+//			Queue<String> level = levelSerial(head);
+//			Node preBuild = buildByPreQueue(pre);
+//			Node posBuild = buildByPosQueue(pos);
+////			Node inBuild = buildByInQueue(pos);
+//			Node levelBuild = buildByLevelQueue(level);
+//			if (!isSameValueStructure(preBuild, posBuild) || !isSameValueStructure(posBuild, levelBuild)) {
+//				System.out.println("Oops!");
+//			}
+//		}
 		System.out.println("test finish!");
 		
 	}
