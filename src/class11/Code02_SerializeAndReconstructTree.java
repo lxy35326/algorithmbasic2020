@@ -242,6 +242,10 @@ public class Code02_SerializeAndReconstructTree {
 	}
 
 	public static void main(String[] args) {
+		String s = generateString();
+		StringBuilder sb = new StringBuilder(s);
+		m(s);
+		m(sb);
 		int maxLevel = 5;
 		int maxValue = 100;
 		int testTimes = 1000000;
@@ -249,10 +253,12 @@ public class Code02_SerializeAndReconstructTree {
 		for (int i = 0; i < testTimes; i++) {
 			Node head = generateRandomBST(maxLevel, maxValue);
 			Queue<String> pre = preSerial(head);
+			Queue<String> in = inSerial(head);
 			Queue<String> pos = posSerial(head);
 			Queue<String> level = levelSerial(head);
 			Node preBuild = buildByPreQueue(pre);
 			Node posBuild = buildByPosQueue(pos);
+//			Node inBuild = buildByInQueue(pos);
 			Node levelBuild = buildByLevelQueue(level);
 			if (!isSameValueStructure(preBuild, posBuild) || !isSameValueStructure(posBuild, levelBuild)) {
 				System.out.println("Oops!");
@@ -260,5 +266,14 @@ public class Code02_SerializeAndReconstructTree {
 		}
 		System.out.println("test finish!");
 		
+	}
+	static String generateString(){
+		return " " +Math.random();
+	}
+	static void m(String s){
+
+	}
+	static void m(StringBuilder s){
+
 	}
 }
