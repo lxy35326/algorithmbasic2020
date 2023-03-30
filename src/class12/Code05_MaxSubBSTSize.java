@@ -25,6 +25,7 @@ public class Code05_MaxSubBSTSize {
 	}
 
 	public static class Info {
+
 		public int maxBSTSubtreeSize;
 		public int allSize;
 		public int max;

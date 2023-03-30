@@ -1,5 +1,7 @@
 package class11;
 
+import class04.Code03_ReversePair;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -36,6 +38,7 @@ public class Code05_TreeMaxWidth {
 				queue.add(cur.left);
 			}
 			if (cur.right != null) {
+//				Pair<String,String> p;
 				levelMap.put(cur.right, curNodeLevel + 1);
 				queue.add(cur.right);
 			}

@@ -12,6 +12,8 @@ public class Code03_IsBalanced {
 		}
 	}
 
+
+
 	public static boolean isBalanced1(Node head) {
 		boolean[] ans = new boolean[1];
 		ans[0] = true;
