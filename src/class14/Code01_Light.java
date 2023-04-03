@@ -19,6 +19,7 @@ public class Code01_Light {
 			for (int i = 0; i < str.length; i++) {
 				if (str[i] != 'X') { // 当前位置是点的话
 					if (!lights.contains(i - 1) && !lights.contains(i) && !lights.contains(i + 1)) {
+						int i1 = Integer.MIN_VALUE;
 						return Integer.MAX_VALUE;
 					}
 				}

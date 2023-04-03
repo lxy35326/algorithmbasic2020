@@ -37,9 +37,9 @@ public class Code06_UnionFind {
 	// 从i开始寻找集合代表点
 	public static int find(int i) {
 		int hi = 0;
-		while (i != father[i]) {
-			help[hi++] = i;
-			i = father[i];
+		while (i != father[i]) { // i == 1
+			help[hi++] = i; // help[0] = 1
+			i = father[i]; // 1 = father[1]
 		}
 		for (hi--; hi >= 0; hi--) {
 			father[help[hi]] = i;
