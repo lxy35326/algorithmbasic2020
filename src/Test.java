@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 public class Test {
     // 5 * 10^9
+
     static void func1(long n){
         long k = 0;
         for (long i = 0; i < n; i++)
