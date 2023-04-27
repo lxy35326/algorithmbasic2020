@@ -14,7 +14,7 @@ public class QuickSort {
     static int[] netherlandsFlag(int[] arr, int l, int r) {
         int slow = l, fast = r - 1;
         int pivot = arr[r];
-        for (int i = l; i < r; ) {
+        for (int i = l; i < fast + 1; ) {
             if (arr[i] < pivot) {
                 swap(arr, slow++, i++);
             } else if (arr[i] > pivot) {
@@ -93,7 +93,7 @@ public class QuickSort {
 
     // for test
     public static void main(String[] args) {
-        quickSort(new int[]{5,2,3,1,4});
+        quickSort(new int[]{5, 2, 3, 1, 4});
         int testTime = 500000;
         int maxSize = 100;
         int maxValue = 100;
