@@ -39,7 +39,7 @@ public class Code04_BSExist {
 	// for test
 	public static int[] generateRandomArray(int maxSize, int maxValue) {
 		int[] arr = new int[(int) ((maxSize + 1) * Math.random())];
-		for (int i = 0; i < arr.length; i++) {
+		for (int i = 0; i < arr.length; i++) { // [0, maxValue] + (1- maxValue,0]
 			arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) (maxValue * Math.random());
 		}
 		return arr;
@@ -47,7 +47,7 @@ public class Code04_BSExist {
 	
 	public static void main(String[] args) {
 		int testTime = 500000;
-		int maxSize = 10;
+		int maxSize = 20;
 		int maxValue = 100;
 		boolean succeed = true;
 		for (int i = 0; i < testTime; i++) {
