@@ -1,6 +1,8 @@
 package class05;
 
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class QuickSort {
     static void swap(int[] arr, int l, int r) {
@@ -8,6 +10,36 @@ public class QuickSort {
             arr[l] = arr[l] ^ arr[r];
             arr[r] = arr[l] ^ arr[r];
             arr[l] = arr[l] ^ arr[r];
+        }
+    }
+
+    static class U {
+        int start;
+        int end;
+
+        public U(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+    }
+
+    static void quickSortU(int[] arr) {
+        if (arr == null || arr.length < 2) return;
+        processU(arr, 0, arr.length - 1);
+    }
+
+    static void processU(int[] arr, int l, int r) {
+        Deque<U> stack = new LinkedList<>();
+        stack.push(new U(l, r));
+        while (!stack.isEmpty()) {
+            U pop = stack.pop();
+            int start = pop.start;
+            int end = pop.end;
+            if (start >= end) continue;
+            swap(arr, end, (int) (Math.random() * (end - start + 1)) + start);
+            int[] ints = netherlandsFlag(arr, start, end);
+            stack.push(new U(start, ints[0] - 1));
+            stack.push(new U(ints[1] + 1, end));
         }
     }
 
@@ -24,7 +56,7 @@ public class QuickSort {
             }
         }
         swap(arr, fast + 1, r); //fast是等于区的最后一个位置
-        return new int[]{slow, fast};
+        return new int[]{slow, fast + 1};
     }
 
     static void quickSort(int[] nums) {
@@ -94,17 +126,21 @@ public class QuickSort {
     // for test
     public static void main(String[] args) {
         quickSort(new int[]{5, 2, 3, 1, 4});
-        int testTime = 500000;
+        int testTime = 100_000;
         int maxSize = 100;
         int maxValue = 100;
         boolean succeed = true;
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
+//            int[] arr1 = {3, 1, 2, 4};
+
             int[] arr2 = copyArray(arr1);
+            int[] arr3 = copyArray(arr1);
 //            int[] arr3 = copyArray(arr1);
             Arrays.sort(arr1);
-            quickSort(arr2);
-            if (!isEqual(arr1, arr2)) {
+//            quickSort(arr2);
+            quickSortU(arr3);
+            if (!isEqual(arr1, arr3)) {
                 succeed = false;
                 break;
             }
