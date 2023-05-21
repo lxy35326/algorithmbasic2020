@@ -121,23 +121,26 @@ public class Code02_SerializeAndReconstructTree {
 	}
 
 	public static Queue<String> levelSerial(Node head) {
+		//ans表示要返回的结点，即 序列化的结果，包含null
 		Queue<String> ans = new LinkedList<>();
 		if (head == null) {
 			ans.add(null);
 		} else {
-			ans.add(String.valueOf(head.value));
-			Queue<Node> queue = new LinkedList<Node>();
+//			ans.add(String.valueOf(head.value));
+			//queue是用来进行遍历的队列
+			Queue<Node> queue = new LinkedList<>();
 			queue.add(head);
 			while (!queue.isEmpty()) {
 				head = queue.poll(); // head 父   子
+				ans.add(String.valueOf(head.value));
 				if (head.left != null) {
-					ans.add(String.valueOf(head.left.value));
+//					ans.add(String.valueOf(head.left.value));
 					queue.add(head.left);
 				} else {
 					ans.add(null);
 				}
 				if (head.right != null) {
-					ans.add(String.valueOf(head.right.value));
+//					ans.add(String.valueOf(head.right.value));
 					queue.add(head.right);
 				} else {
 					ans.add(null);
@@ -242,6 +245,17 @@ public class Code02_SerializeAndReconstructTree {
 	}
 
 	public static void main(String[] args) {
+		Node _1 = new Node(1);
+		Node _2 = new Node(2);
+		Node _3 = new Node(3);
+		Node _4 = new Node(4);
+		Node _5 = new Node(5);
+		_1.left = _2;
+		_1.right = _3;
+		_3.left=_4;
+		_3.right=_5;
+		Queue<String> strings = levelSerial(_1);
+		strings.forEach(System.out::println);
 		String s = generateString();
 		StringBuilder sb = new StringBuilder(s);
 		m(s);
@@ -250,26 +264,30 @@ public class Code02_SerializeAndReconstructTree {
 		int maxValue = 100;
 		int testTimes = 1000000;
 		System.out.println("test begin");
-		for (int i = 0; i < 10; i++) {
-			Node head = generateRandomBST(maxLevel,maxValue);
-			printTree(head);
+//		for (int i = 0; i < 10; i++) {
+//			Node head = generateRandomBST(maxLevel,maxValue);
+//			printTree(head);
+//
+//		}
 
-		}
-
-//		for (int i = 0; i < testTimes; i++) {
-//			Node head = generateRandomBST(maxLevel, maxValue);
+		for (int i = 0; i < testTimes; i++) {
+			Node head = generateRandomBST(maxLevel, maxValue);
 //			Queue<String> pre = preSerial(head);
 //			Queue<String> in = inSerial(head);
 //			Queue<String> pos = posSerial(head);
-//			Queue<String> level = levelSerial(head);
+			Queue<String> level = levelSerial(head);
 //			Node preBuild = buildByPreQueue(pre);
 //			Node posBuild = buildByPosQueue(pos);
-////			Node inBuild = buildByInQueue(pos);
-//			Node levelBuild = buildByLevelQueue(level);
+//			Node inBuild = buildByInQueue(pos);
+			Node levelBuild = buildByLevelQueue(level);
 //			if (!isSameValueStructure(preBuild, posBuild) || !isSameValueStructure(posBuild, levelBuild)) {
 //				System.out.println("Oops!");
 //			}
-//		}
+			if (!isSameValueStructure(head,levelBuild)) {
+				System.out.println("Oops!");
+				break;
+			}
+		}
 		System.out.println("test finish!");
 		
 	}
