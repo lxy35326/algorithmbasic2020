@@ -3,21 +3,22 @@ import java.util.Scanner;
 public class Test {
     public static void main(String[] args) {
         int[] arr = new int[5];
-        Scanner in = new Scanner(System.in);
+
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = in.nextInt();
+            arr[i] = i;
         }
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr.length - 1 - i; j++) {
-                if (arr[j] > arr[j+1]) {
-                    int t = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1]=t;
-                }
-            }
+        char[] c = new char[]{'a','b'};
+        for (int a : arr) {
+            a = 1;
         }
+        for (char cc : c)
+            cc = 'c';
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+        for (char c1 : c) {
+            System.out.println(c1);
         }
     }
 }
