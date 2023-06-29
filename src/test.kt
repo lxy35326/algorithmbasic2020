@@ -1,3 +1,5 @@
+import java.lang.reflect.Array
+
 fun rob(nums: IntArray): Int {
     val a = IntArray(nums.size)
     var m: Int? = a.max()
@@ -9,7 +11,7 @@ fun rob(nums: IntArray): Int {
 }
 
 fun main(): Unit {
-    val a = IntArray(0)
-
-    rob(a)
+    val a = IntArray(5){it -> it * 2}
+    val length = Array.getLength(a)
+    println(length)
 }
