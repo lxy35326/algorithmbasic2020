@@ -43,7 +43,7 @@ abstract class AbstractUserType<T> implements UserType {
 public class Main {
 
     static void testErase() throws Exception {
-        AbstractUserType<Integer[]> abstractUserType = new AbstractUserType<>() {
+        AbstractUserType<Integer[]> abstractUserType = new AbstractUserType<Integer[]>() {
         };
 
         Method returnT = AbstractUserType.class.getDeclaredMethod("returnT", Object[].class);

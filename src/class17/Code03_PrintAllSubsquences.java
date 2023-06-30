@@ -63,11 +63,11 @@ public class Code03_PrintAllSubsquences {
 		for (String str : ans1) {
 			System.out.println(str);
 		}
-		System.out.println("=================");
-		for (String str : ans2) {
-			System.out.println(str);
-		}
-		System.out.println("=================");
+//		System.out.println("=================");
+//		for (String str : ans2) {
+//			System.out.println(str);
+//		}
+//		System.out.println("=================");
 
 	}
 
