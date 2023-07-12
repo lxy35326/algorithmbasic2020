@@ -118,6 +118,7 @@ public class Code02_ConvertToLetterString {
 			}
 		}
 		System.out.println("测试结束");
+		System.out.println(number("12111"));
 	}
 
 }

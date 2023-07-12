@@ -90,6 +90,11 @@ public class Code03_Coffee {
 			drinks[i] = cur.timePoint;
 			heap.add(cur);
 		}
+		System.out.println("drinks数组为:");
+		for (int drink : drinks) {
+			System.out.println(drink);
+		}
+		System.out.println();
 		return bestTime(drinks, a, b, 0, 0);
 	}
 
@@ -175,28 +180,29 @@ public class Code03_Coffee {
 	}
 
 	public static void main(String[] args) {
+		System.out.println(minTime1(new int[]{100, 20}, 6, 1, 10));
 		int len = 10;
 		int max = 10;
 		int testTime = 10;
 		System.out.println("测试开始");
-		for (int i = 0; i < testTime; i++) {
-			int[] arr = randomArray(len, max);
-			int n = (int) (Math.random() * 7) + 1;
-			int a = (int) (Math.random() * 7) + 1;
-			int b = (int) (Math.random() * 10) + 1;
-			int ans1 = right(arr, n, a, b);
-			int ans2 = minTime1(arr, n, a, b);
-			int ans3 = minTime2(arr, n, a, b);
-			if (ans1 != ans2 || ans2 != ans3) {
-				printArray(arr);
-				System.out.println("n : " + n);
-				System.out.println("a : " + a);
-				System.out.println("b : " + b);
-				System.out.println(ans1 + " , " + ans2 + " , " + ans3);
-				System.out.println("===============");
-				break;
-			}
-		}
+//		for (int i = 0; i < testTime; i++) {
+//			int[] arr = randomArray(len, max);
+//			int n = (int) (Math.random() * 7) + 1;
+//			int a = (int) (Math.random() * 7) + 1;
+//			int b = (int) (Math.random() * 10) + 1;
+//			int ans1 = right(arr, n, a, b);
+//			int ans2 = minTime1(arr, n, a, b);
+//			int ans3 = minTime2(arr, n, a, b);
+//			if (ans1 != ans2 || ans2 != ans3) {
+//				printArray(arr);
+//				System.out.println("n : " + n);
+//				System.out.println("a : " + a);
+//				System.out.println("b : " + b);
+//				System.out.println(ans1 + " , " + ans2 + " , " + ans3);
+//				System.out.println("===============");
+//				break;
+//			}
+//		}
 		System.out.println("测试结束");
 
 	}

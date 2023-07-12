@@ -3,7 +3,9 @@ package class19;
 // 这个问题leetcode上可以直接测
 // 链接：https://leetcode.com/problems/longest-common-subsequence/
 public class Code04_LongestCommonSubsequence {
-
+	static void m(int... a){
+		System.out.println(a.getClass().getSimpleName());
+	}
 	public static int longestCommonSubsequence1(String s1, String s2) {
 		if (s1 == null || s2 == null || s1.length() == 0 || s2.length() == 0) {
 			return 0;

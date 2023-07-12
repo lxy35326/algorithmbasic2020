@@ -60,7 +60,7 @@ public class Code02_CoinsWayEveryPaperDifferent {
 		for (int i = 0; i < testTime; i++) {
 			int[] arr = randomArray(maxLen, maxValue);
 			int aim = (int) (Math.random() * maxValue);
-			int ans1 = coinWays(arr, aim);
+			int ans1 = Coins.func(arr, aim);
 			int ans2 = dp(arr, aim);
 			if (ans1 != ans2) {
 				System.out.println("Oops!");
