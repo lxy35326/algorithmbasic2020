@@ -73,15 +73,17 @@ public class Code03_NQueens {
 	}
 
 	public static void main(String[] args) {
-		int n = 15;
+		int n = 10;
 
 		long start = System.currentTimeMillis();
 		System.out.println(num2(n));
+
 		long end = System.currentTimeMillis();
 		System.out.println("cost time: " + (end - start) + "ms");
 
 		start = System.currentTimeMillis();
 		System.out.println(num1(n));
+		System.out.println(NQueens.num1(n));
 		end = System.currentTimeMillis();
 		System.out.println("cost time: " + (end - start) + "ms");
 

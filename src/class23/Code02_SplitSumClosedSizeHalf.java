@@ -226,13 +226,15 @@ public class Code02_SplitSumClosedSizeHalf {
 			int len = (int) (Math.random() * maxLen);
 			int[] arr = randomArray(len, maxValue);
 			int ans1 = right(arr);
+			int an = SplitSumClosedHalf.right(arr);
 			int ans2 = dp(arr);
 			int ans3 = dp2(arr);
-			if (ans1 != ans2 || ans1 != ans3) {
+			if (ans1 != ans2 || ans1 != ans3 || ans1 != an) {
 				printArray(arr);
 				System.out.println(ans1);
 				System.out.println(ans2);
 				System.out.println(ans3);
+				System.out.println(an);
 				System.out.println("Oops!");
 				break;
 			}
