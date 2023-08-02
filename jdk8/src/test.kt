@@ -1,4 +1,13 @@
 fun main():Unit{
-    val m = listOf(1,2)
-    m.forEach { print(it) }
+    var t  = Test()
+
 }
+
+class Test{
+    var x:Int = 0
+    var y:Int = 0
+    fun method(){
+        x
+    }
+}
+

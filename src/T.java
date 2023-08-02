@@ -1,11 +1,26 @@
+import com.sun.jndi.toolkit.url.Uri;
+
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 
 public class T {
-    public static void main(String[] args) {
+    public static void main(String[] args)throws IOException {
         StringJoiner sj = new StringJoiner(",");
         sj.add(null);
         System.out.println(sj);
+        System.out.println("\u8bf7");
+        System.out.println("\u6c42");
+        System.out.println("\u6210");
+        System.out.println("\u529f");
+        String de = URLEncoder.encode("请求成功");
+        System.out.println(de);
 
+        System.out.println("\u8bf7\u6c42\u6210\u529f");
+        System.out.println("\u8bf7\u6c42\u6210\u529f".equals("请求成功"));
+//        Uri uri =
     }
 }
 class Node {

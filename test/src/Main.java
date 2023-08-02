@@ -7,8 +7,7 @@ import java.util.Scanner;
 
 class Main extends JFrame implements ActionListener {
     Main(){
-        JTextField text;
-        text.addActionListener(this);
+
     }
     //这个函数用来判断n是不是回文数
     static boolean fun(int n){
@@ -23,18 +22,18 @@ class Main extends JFrame implements ActionListener {
         return r == n;
     }
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        for (int i = 1; i <= n; i++) {
-            if (fun(i))
-                System.out.println(i);
-        }
 
+        Outer.Inner inner = new Outer().new Inner();
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+    }
+}
+class Outer{
+    class Inner{
 
     }
 }

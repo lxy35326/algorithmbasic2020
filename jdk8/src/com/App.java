@@ -9,6 +9,7 @@ public class App {
         try {
             App app = new App();
         } catch (MyException e) {
+            java.io.File file = new java.io.File("");
             e.priS();
         }catch (Exception e){
 
