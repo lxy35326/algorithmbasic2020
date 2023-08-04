@@ -7,11 +7,11 @@ import java.util.Map.Entry;
 import java.util.LinkedList;
 
 public class Code04_MinCoinsOnePaper {
-    static final int magic = Integer.MAX_VALUE;
-
     public static int minCoins(int[] arr, int aim) {
         return process1(arr, 0, aim);
     }
+
+    static final int magic = Integer.MAX_VALUE;
 
     /**
      * 当来到index位置时，如果还需要组成rest面值的总钱数，需要的最少张数。
@@ -148,15 +148,14 @@ public class Code04_MinCoinsOnePaper {
         int[][] dp = new int[N + 1][aim + 1];
         dp[N][0] = 0;
         for (int j = 1; j <= aim; j++) {
-            dp[N][j] = Integer.MAX_VALUE;
+            dp[N][j] = magic;
         }
         // 这三层for循环，时间复杂度为O(货币种数 * aim * 每种货币的平均张数)
         for (int index = N - 1; index >= 0; index--) {
             for (int rest = 0; rest <= aim; rest++) {
                 dp[index][rest] = dp[index + 1][rest];
-                for (int zhang = 1; zhang * coins[index] <= aim && zhang <= zhangs[index]; zhang++) {
-                    if (rest - zhang * coins[index] >= 0
-                            && dp[index + 1][rest - zhang * coins[index]] != Integer.MAX_VALUE) {
+                for (int zhang = 1; zhang * coins[index] <= rest && zhang <= zhangs[index]; zhang++) {
+                    if (dp[index + 1][rest - zhang * coins[index]] != magic) {
                         dp[index][rest] = Math.min(dp[index][rest], zhang + dp[index + 1][rest - zhang * coins[index]]);
                     }
                 }
@@ -164,6 +163,45 @@ public class Code04_MinCoinsOnePaper {
         }
         return dp[0][aim];
     }
+
+    static int dpFinal(int[] arr, int aim) {
+        if (aim == 0) return 0;
+        // 得到info时间复杂度O(arr长度)
+        Info info = getInfo(arr);
+        int[] coins = info.coins;
+        int[] zhangs = info.zhangs;
+        int len = coins.length;
+        int[][] dp = new int[len + 1][aim + 1];
+        Arrays.fill(dp[len], magic);
+        dp[len][0] = 0;
+        for (int index = len - 1; index >= 0; index--) {
+            //这里要进行分组，当前的货币数值为：coins[index],比如为5，则 0 1 2 3 4位置分别是不同的组别，
+            //因此要分为coins[index]组。 如果货币数值为100，aim为10，分为100组也没用，所以要分成min(coins[index], aim + 1)组
+            //
+            int total = Math.min(coins[index], aim + 1);
+            for (int group = 0; group < total; group++) {
+                //每一组要来一个滑动窗口,滑动窗口中存放最小值的下标
+                Deque<Integer> w = new LinkedList<>();
+                for (int rest = group; rest < aim + 1; rest += coins[index]) {
+                    //当前要算的是dp[index][rest]的值
+                    while (!w.isEmpty() && (
+                            dp[index + 1][w.peekLast()] == magic || dp[index + 1][w.peekLast()] + (rest - w.peekLast()) / coins[index] >= dp[index + 1][rest])) {
+                        w.pollLast();
+                    }
+                    w.offerLast(rest);
+                    //怎么选择过期的下标呢？
+                    //当前的来到的位置是rest处，有zhangs[index]张货币，因此过期的下标应该是rest - (zhangs[index] + 1) * coins[index]
+                    if (w.peekFirst() == rest - (zhangs[index] + 1) * coins[index]) {
+                        w.pollFirst();
+                    }
+                    int r = dp[index + 1][w.peekFirst()];
+                    dp[index][rest] = r == magic ? magic: r + (rest - w.peekFirst()) / coins[index];
+                }
+            }
+        }
+        return dp[0][aim];
+    }
+
 
     static int dp33(int[] arr, int aim) {
         if (aim == 0) return 0;
@@ -190,7 +228,7 @@ public class Code04_MinCoinsOnePaper {
                         w.pollFirst();
                     }
                     if (dp[index + 1][w.peekLast()] != magic) {
-                        dp[index][r] =dp[index + 1][w.peekLast()] + compensate(w.peekLast(), r, coins[index]);
+                        dp[index][r] = dp[index + 1][w.peekLast()] + compensate(w.peekLast(), r, coins[index]);
                     } else {
                         dp[index][r] = magic;
                     }
@@ -214,7 +252,7 @@ public class Code04_MinCoinsOnePaper {
         int[][] dp = new int[N + 1][aim + 1];
         dp[N][0] = 0;
         for (int j = 1; j <= aim; j++) {
-            dp[N][j] = Integer.MAX_VALUE;
+            dp[N][j] = magic;
         }
         // 虽然是嵌套了很多循环，但是时间复杂度为O(货币种数 * aim)
         // 因为用了窗口内最小值的更新结构
@@ -283,7 +321,8 @@ public class Code04_MinCoinsOnePaper {
             int ans3 = dp2(arr, aim);
             int ans4 = dp3(arr, aim);
             int ans5 = dp33(arr, aim);
-            if (ans1 != ans2 || ans3 != ans4 || ans1 != ans3 || ans1 != ans21) {
+            int dpFinal = dpFinal(arr, aim);
+            if (ans1 != ans2 || ans3 != ans4 || ans1 != ans3 || ans1 != ans21 || ans1 != dpFinal) {
                 System.out.println("Oops!");
                 printArray(arr);
                 System.out.println(aim);
@@ -293,6 +332,7 @@ public class Code04_MinCoinsOnePaper {
                 System.out.println(ans3);
                 System.out.println(ans5);
                 System.out.println(ans4);
+                System.out.println(dpFinal);
                 break;
             }
         }
