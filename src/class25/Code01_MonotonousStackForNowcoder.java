@@ -28,26 +28,86 @@ public class Code01_MonotonousStackForNowcoder {
 	public static int[] stack2 = new int[1000000];
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StreamTokenizer in = new StreamTokenizer(br);
-		PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
-		while (in.nextToken() != StreamTokenizer.TT_EOF) {
-			int n = (int) in.nval;
-			for (int i = 0; i < n; i++) {
-				in.nextToken();
-				arr[i] = (int) in.nval;
+		arr = new int[]{1,2,3,2};
+		ans = new int[4][2];
+		my(4);
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		StreamTokenizer in = new StreamTokenizer(br);
+//		PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+//		while (in.nextToken() != StreamTokenizer.TT_EOF) {
+//			int n = (int) in.nval;
+//			for (int i = 0; i < n; i++) {
+//				in.nextToken();
+//				arr[i] = (int) in.nval;
+//			}
+//			getNearLess(n);
+//			for (int i = 0; i < n; i++) {
+//				out.println(ans[i][0] + " " + ans[i][1]);
+//			}
+//			out.flush();
+//		}
+	}
+
+	public static void my(int n) {
+		//思路：stack1中不管重复与否，都放
+		//stack2中，只放重复值的最后一个下标。
+		//这样可以达成什么效果?
+		//判断左侧最小值的话：如果stack2中的个数小于2，说明没有左侧
+		//判断右侧最小值的话：不用判断
+		//相等的情况：如果遇见栈顶的元素与当前元素相等的话，需要更新stack2中的最后一个值，
+		//先考虑这么多吧，后续的代码细节遇到再说
+
+		int stackSize1, stackSize2;
+		stackSize1 = stackSize2 = 0;
+		for (int i = 0; i < n; i++) {
+			//如果栈1不空且大于当前值
+			while (stackSize1 != 0 && arr[stack1[stackSize1 - 1]] > arr[i]) {
+				//取出上一个元素
+				int cur = stack1[stackSize1 - 1];
+				stackSize1--;
+				ans[cur][1] = i;
+				int left = stackSize2 < 2 ? -1 : stack2[stackSize2 - 2];
+				ans[cur][0] = left;
+				//如果当前栈顶没有相同元素的话
+				if (stackSize1 == 0 || arr[stack1[stackSize1 - 1]] != arr[cur]) {
+					stackSize2--;
+				}
 			}
-			getNearLess(n);
-			for (int i = 0; i < n; i++) {
-				out.println(ans[i][0] + " " + ans[i][1]);
+			//到目前为止，比当前元素大的元素都已经弹了出去
+
+			//如果等于当前值呢？
+			if (stackSize1 != 0 && arr[stack1[stackSize1 - 1]] == arr[i]) {
+				stack2[stackSize2 - 1] = i;
+			} else {
+				//此时，小于当前值
+				stack2[stackSize2++] = i;
 			}
-			out.flush();
+			stack1[stackSize1] = i;
+			stackSize1++;
+		}
+		while (stackSize1 != 0) {
+			//如果栈1不空
+			int cur = stack1[stackSize1 - 1];//取出栈顶元素
+			stackSize1--;
+			ans[cur][1] = -1;
+			int left = stackSize2 < 2 ? -1 : stack2[stackSize2 - 2];
+			ans[cur][0] = left;
+			if (stackSize1 == 0 || arr[stack1[stackSize1 - 1]] != arr[cur]) {
+				stackSize2--;
+			}
+		}
+		for (int[] an : ans) {
+			System.out.println(an[0] +" "+an[1]);
 		}
 	}
+
+
+
 
 	public static void getNearLess(int n) {
 		int stackSize1 = 0;
 		int stackSize2 = 0;
+		//如果本来是[3,4,2]的话
 		for (int i = 0; i < n; i++) {
 			while (stackSize1 > 0 && arr[stack1[stackSize1 - 1]] > arr[i]) {
 				int curIndex = stack1[--stackSize1];
@@ -58,6 +118,8 @@ public class Code01_MonotonousStackForNowcoder {
 					stackSize2--;
 				}
 			}
+
+			//如果当前元素的值和栈顶的相等，则更新stack2的最后一个位置；否则直接加到stack2中
 			if (stackSize1 != 0 && arr[stack1[stackSize1 - 1]] == arr[i]) {
 				stack2[stackSize2 - 1] = i;
 			} else {

@@ -1,5 +1,10 @@
 package class25;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StreamTokenizer;
+import java.sql.Array;
 import java.util.*;
 
 public class Code01_MonotonousStack {
@@ -19,7 +24,7 @@ public class Code01_MonotonousStack {
             stack.push(i);
         }
         //上面是遍历过程
-//[0,1]
+        //[0,1]
         //下面是如果遍历完成之后，栈中还有元素的情况
         while (!stack.isEmpty()) {
             Integer cur = stack.pop();
@@ -61,6 +66,41 @@ public class Code01_MonotonousStack {
         }
         return res;
     }
+
+
+    public static int[][] getNearLess1(int[] arr) {
+        int[][] res = new int[arr.length][2];
+        Deque<List<Integer>> stack = new LinkedList<>();
+        for (int i = 0; i < arr.length; i++) {
+            while (!stack.isEmpty() && arr[stack.peek().get(0)] > arr[i]) {
+                List<Integer> now = stack.pop();
+                int left = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
+                for (Integer integer : now) {
+                    res[integer][1] = i;
+                    res[integer][0] = left;
+                }
+            }
+            if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) {
+                stack.peek().add(i);
+            } else {
+                //小于
+                List<Integer> list = new ArrayList<>();
+                list.add(i);
+                stack.push(list);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            List<Integer> cur = stack.pop();
+            int left = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
+            for (Integer i : cur) {
+                res[i][1] = -1;
+                res[i][0] = left;
+            }
+        }
+        return res;
+    }
+
 
     public static int[][] getNearLess(int[] arr) {
         int[][] res = new int[arr.length][2];
@@ -167,35 +207,150 @@ public class Code01_MonotonousStack {
         System.out.println();
     }
 
-    public static void main(String[] args) {
-        int size = 10;
-        int max = 20;
-        int testTimes = 2000000;
+    public static int[][] he(int[] nums) throws IOException {
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		int length = Integer.parseInt(br.readLine());
+//		String[] strs = br.readLine().split(" ");
+//		int[] nums = new int[strs.length];
+//		for(int i=0;i<strs.length;i++){
+//			nums[i] = Integer.parseInt(strs[i]);
+//		}
+        boolean L_flag = true, R_flag = true;
+        int[][] res = new int[nums.length][2];
+//		StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < nums.length; i++) {
+            for (int L = i - 1, R = i + 1; ; ) {
+                if (L < 0 && L_flag) {
+                    L_flag = false;
+                    L = -1;
+                }
+                if (R >= nums.length && R_flag) {
+                    R_flag = false;
+                    R = -1;
+                }
+                if (L_flag && nums[L] < nums[i]) {
+                    L_flag = false;
+                }
+                if (R_flag && nums[R] < nums[i]) {
+                    R_flag = false;
+                }
+                if (L_flag) {
+                    L--;
+                }
+                if (R_flag) {
+                    R++;
+                }
+                if (!L_flag && !R_flag) {
+                    res[i][0] = L;
+                    res[i][1] = R;
+                    L_flag = true;
+                    R_flag = true;
+                    break;
+                }
+            }
+        }
+//		System.out.print(sb.toString());
+        return res;
+    }
+
+    public static int[][] my(int[] arr) throws IOException {
+//		StreamTokenizer st = new StreamTokenizer(new InputStreamReader(System.in));
+////		StringBuilder sb = new StringBuilder();
+//		st.nextToken();
+//		int n = (int) st.nval;
+////		int[] arr = new int[n];
+//		for (int i = 0; i < n; i++) {
+//			st.nextToken();
+//			arr[i] = (int) st.nval;
+//		}
+        int n = arr.length;
+        int[][] res = new int[n][2];
+        Deque<List<Integer>> stack = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek().get(0)] > arr[i]) {
+                List<Integer> cur = stack.pop();
+                int left = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
+                for (Integer item : cur) {
+                    res[item][1] = i;
+                    res[item][0] = left;
+                }
+            }
+            if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) {
+                stack.peek().add(i);
+            } else {
+                //加入一个链表
+                List<Integer> list = new ArrayList<>();
+                list.add(i);
+                stack.push(list);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            List<Integer> cur = stack.pop();
+            int left = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size() - 1);
+            for (Integer item : cur) {
+                res[item][1] = -1;
+                res[item][0] = left;
+            }
+        }
+
+        return res;
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        int size = 1000000;
+        int max = 2000000;
+        int testTimes = 500;
         System.out.println("测试开始");
 
 //		int[][] res = getNearLessNoRepeat1(new int[]{0,1});
 //		for (int[] re : res) {
 //			System.out.println(Arrays.toString(re));
 //		}
+        long my = 0;
+        long he = 0;
         for (int i = 0; i < testTimes; i++) {
-            int[] arr1 = getRandomArrayNoRepeat(size);
+//			System.out.println(i);
+//            int[] arr1 = getRandomArrayNoRepeat(size);
             int[] arr2 = getRandomArray(size, max);
-            if (!isEqual(getNearLessNoRepeat(arr1), rightWay(arr1))) {
-                System.out.println("Oops!");
-                printArray(arr1);
-                break;
-            }
-			if (!isEqual(getNearLessNoRepeat1(arr1), rightWay(arr1))) {
-				System.out.println("Oops111!");
-				printArray(arr1);
-				break;
-			}
-            if (!isEqual(getNearLess(arr2), rightWay(arr2))) {
-                System.out.println("Oops!");
-                printArray(arr2);
-                break;
-            }
+            long l = System.currentTimeMillis();
+            my(arr2);
+            long l1 = System.currentTimeMillis();
+            my += l1 - l;
+
+            long r = System.currentTimeMillis();
+            he(arr2);
+            long r1 = System.currentTimeMillis();
+            he += r1 - r;
+//            if (!isEqual(getNearLessNoRepeat(arr1), rightWay(arr1))) {
+//                System.out.println("Oops!");
+//                printArray(arr1);
+//                break;
+//            }
+//			if (!isEqual(my(arr1), he(arr1))) {
+//				System.out.println("Oops!");
+//				printArray(arr1);
+//				break;
+//			}
+//			if (!isEqual(getNearLessNoRepeat1(arr1), rightWay(arr1))) {
+//				System.out.println("Oops111!");
+//				printArray(arr1);
+//				break;
+//			}
+//            if (!isEqual(getNearLess(arr2), rightWay(arr2))) {
+//                System.out.println("Oops!");
+//                printArray(arr2);
+//                break;
+//            }
+//			if (!isEqual(getNearLess1(arr2), rightWay(arr2))) {
+//				System.out.println("Oops222!");
+//				printArray(arr2);
+//				break;
+//			}
         }
+        System.out.println("my:" + my);
+        System.out.println("he:" + he);
         System.out.println("测试结束");
     }
 }
