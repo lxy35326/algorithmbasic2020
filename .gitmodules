@@ -1,0 +1,3 @@
+[submodule "11/librime-lua"]
+	path = 11/librime-lua
+	url = https://github.com/hchunhui/librime-lua.git
