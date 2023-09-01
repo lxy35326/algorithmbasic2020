@@ -23,6 +23,55 @@ public class Code01_MorrisTraversal {
 		// 3
 	}
 
+	static void morris_1(Node head) {
+		if (head == null) return ;
+		Node cur = head;
+		Node mostRight = null;
+		while (cur != null) {
+			mostRight = cur.left;
+			//有左树
+			if (mostRight != null) {
+				while (mostRight.right != null && mostRight.right != cur) {
+					mostRight = mostRight.right;
+				}
+				if (mostRight.right == null) {
+					mostRight.right = cur;
+					cur = cur.left;
+					continue;
+				} else {
+					mostRight.right = null;
+				}
+			}
+			cur = cur.right;
+		}
+	}
+
+	static void morris_prev(Node head) {
+		if (head == null) return ;
+		Node cur = head;
+		Node mostRight = null;
+		while (cur != null) {
+			mostRight = cur.left;
+			//有左树
+			if (mostRight != null) {
+				while (mostRight.right != null && mostRight.right != cur) {
+					mostRight = mostRight.right;
+				}
+				if (mostRight.right == null) {
+					System.out.println(cur.value);
+					mostRight.right = cur;
+					cur = cur.left;
+					continue;
+				} else {
+					mostRight.right = null;
+				}
+			} else {
+				System.out.println(cur.value);
+			}
+			cur = cur.right;
+		}
+	}
+
 	public static void morris(Node head) {
 		if (head == null) {
 			return;
@@ -128,6 +177,34 @@ public class Code01_MorrisTraversal {
 		System.out.println();
 	}
 
+	public static boolean isValidBST(Node root) {
+		Node cur = root, mostRight = null;
+		Integer prev = null;
+		boolean ans = true;
+
+		while (cur != null) {
+			mostRight = cur.left;
+			if (mostRight != null) {
+				while (mostRight.right != null && mostRight.right != cur) {
+					mostRight = mostRight.right;
+				}
+				if (mostRight == null) {
+					mostRight.right = cur;
+					cur = cur.left;
+					continue;
+				} else {
+					mostRight.right = null;
+				}
+			}
+			if (prev != null && prev >= cur.value) ans = false;
+			prev = cur.value;
+			cur = cur.right;
+
+		}
+
+		return ans;
+	}
+
 	public static void printEdge(Node head) {
 		Node tail = reverseEdge(head);
 		Node cur = tail;
@@ -224,6 +301,9 @@ public class Code01_MorrisTraversal {
 		morrisPre(head);
 		morrisPos(head);
 		printTree(head);
+		Node head1 = new Node(1);
+		head1.left = new Node(1);
+		isValidBST(head1);
 
 	}
 

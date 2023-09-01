@@ -1,8 +1,17 @@
 package class27;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Code02_TreeEqual {
+	public static void main(String[] args) {
+		String s = "the:我的年龄是18岁，他的年龄是12岁，是10岁。。。。";
+		Pattern compile = Pattern.compile("是([^岁]*)岁");
+		Matcher matcher = compile.matcher(s);
+		while (matcher.find())
+			System.out.println(matcher.group(1));
+	}
 
 	public static class TreeNode {
 		public int val;
