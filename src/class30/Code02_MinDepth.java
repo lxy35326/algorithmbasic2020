@@ -60,6 +60,7 @@ public class Code02_MinDepth {
 					curLevel++;
 					mostRight.right = cur;
 					cur = cur.left;
+					double d = 0.1d;
 					continue;
 				} else { // 第二次到达
 					if (mostRight.left == null) {

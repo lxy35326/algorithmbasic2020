@@ -56,7 +56,7 @@ public class Code01_SegmentTree {
 		}
 
 		// 在初始化阶段，先把sum数组，填好
-		// 在arr[l~r]范围上，去build，1~N，
+		// 在 arr[l~r]范围上，去build，1~N，
 		// rt : 这个范围在sum中的下标
 		public void build(int l, int r, int rt) {
 			if (l == r) {
