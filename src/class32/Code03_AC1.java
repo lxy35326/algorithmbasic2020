@@ -3,7 +3,7 @@ package class32;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Code03_AC1 {
+public class   Code03_AC1 {
 
 	public static class Node {
 		public int end; // 有多少个字符串以该节点结尾

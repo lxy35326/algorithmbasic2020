@@ -6,8 +6,8 @@ package class32;
 public class Code02_IndexTree2D {
 	private int[][] tree;
 	private int[][] nums;
-	private int N;
-	private int M;
+	private int N; // N行
+	private int M; // M列
 
 	public Code02_IndexTree2D(int[][] matrix) {
 		if (matrix.length == 0 || matrix[0].length == 0) {
