@@ -170,7 +170,8 @@ public class Code01_SizeBalancedTreeMap {
 						des.r = cur.r;
 					}
 					des.l = cur.l;
-					des.size = des.l.size + (des.r == null ? 0 : des.r.size) + 1;
+//					des.size = des.l.size + (des.r == null ? 0 : des.r.size) + 1;
+					des.size = cur.size;
 					// free cur memory -> C++
 					cur = des;
 				}

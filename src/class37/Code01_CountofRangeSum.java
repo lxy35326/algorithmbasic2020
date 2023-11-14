@@ -72,6 +72,7 @@ public class Code01_CountofRangeSum {
 			rightNode.l = cur;
 			rightNode.size = cur.size;
 			cur.size = (cur.l != null ? cur.l.size : 0) + (cur.r != null ? cur.r.size : 0) + 1;
+			cur.size -= rightNode.size + rightNode.r.size;
 			// all modify
 			rightNode.all = cur.all;
 			cur.all = (cur.l != null ? cur.l.all : 0) + (cur.r != null ? cur.r.all : 0) + same;
