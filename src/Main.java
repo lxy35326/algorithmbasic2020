@@ -1,153 +1,98 @@
-public class Main {
+import class09.A;
 
-    static class Solution {
-        public static int countRangeSum(int[] nums, int lower, int upper) {
-            long[] arr = new long[nums.length + 1];
-            for (int i = 1; i <= nums.length; i++) {
-                arr[i] = arr[i - 1] + nums[i - 1];
-            }
-            //arr[i]代表[0, i-1]
-            return mergeSort(arr, 0, nums.length, nums.length >> 1, lower, upper);
-        }
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-        static int mergeSort(long[] arr, int l, int r, int m, int lower, int upper) {
-            if (l == r) {
-                return lower <= arr[l] && upper >= arr[l] ? 1 : 0;
-            }
-            return mergeSort(arr, l, m, l + (m- l >> 1), lower, upper) +
-                    mergeSort(arr, m + 1, r, m + 1 + (r - m - 1 >> 1), lower, upper) +
-                    process(arr, l, r, m, lower, upper);
-        }
+class User {
+    String id, username, password;
 
-        static int process(long[] arr, int l, int r, int m, int lower, int upper) {
-            int len = r - l + 1;
-            long[] help = new long[len];
-            int count = 0,i = l, j = m + 1;
-            int ans = 0;
-            while (i <= m && j <= r) {
-                long temp = arr[j] - arr[i];
-                if (temp >= lower && temp <= upper) {
-                    ans++;
-                }
-                if (arr[i] <= arr[j]) {
-                    help[count++] = arr[i++];
-                } else {
-                    help[count++] = arr[j++];
-                }
-            }
+    public User() {
 
-            while (i <= m) {
-                long temp = arr[r] - arr[i];
-                if (temp >= lower && temp <= upper) {
-                    ans++;
-                }
-                help[count++] = arr[i++];
-
-            }
-
-            while (j <= r) {
-                long temp = arr[j] - arr[m];
-                if (temp >= lower && temp <= upper) {
-                    ans++;
-                }
-                help[count++] = arr[j++];
-            }
-
-            System.arraycopy(help, 0, arr, l, len);
-            return ans;
-        }
     }
+
+    public User(String id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj instanceof User) {
+            User u = (User) obj;
+            if (u.id == null && id == null || u.id.equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        if (id == null) return 0;
+        return id.hashCode();
+    }
+}
+
+
+
+class Base extends IOException{
+
+}
+class Derived extends FileNotFoundException{
+
+}
+
+interface BaseI{
+    void read() throws Base;
+}
+interface DerivedI extends BaseI{
+    void read() ;
+}
+
+class Box<T>{
+    T t;
+    Box(T t){
+        this.t=t;
+    }
+    T getValue(){
+        return t;
+    }
+}
+
+
+class Main  {
     public static void main(String[] args) {
-        Solution.countRangeSum(new int[]{0},0,0);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    static class Printer {
-        private boolean isHelloPrinted = false;
-
-        public synchronized void printHello() {
-            while (isHelloPrinted) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            System.out.println("hello");
-            isHelloPrinted = true;
-            notify();
+        int x = 100,z1,z2;
+        int y[] = {1,2};
+        try{
+            z1 = y[2];
+            x = x/z1;
+            System.out.println("result = "+x);
         }
-
-        public synchronized void printWorld() {
-            while (!isHelloPrinted) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            System.out.println("world");
-            isHelloPrinted = false;
-            notify();
+        catch (ArithmeticException E){
+            x = 0;
+            System.out.println("捕捉数学运算异常...");
+        }
+        catch (Exception E){
+            x = 0;
+            System.out.println("捕捉超出索引异常...");
+        }
+        finally {
+            if(x == 0)
+                System.out.println("程序执行发生异常！");
+            else
+                System.out.println("程序正常执行完毕");
         }
     }
+}
 
-    static class HelloRunnable implements Runnable {
-        private final Printer printer;
+class Outer{
+    class Inner{
 
-        public HelloRunnable(Printer printer) {
-            this.printer = printer;
-        }
-
-        @Override
-        public void run() {
-            for (int i = 0; i < 10; i++) {
-                printer.printHello();
-            }
-        }
-    }
-
-    static class WorldRunnable implements Runnable {
-        private final Printer printer;
-
-        public WorldRunnable(Printer printer) {
-            this.printer = printer;
-        }
-
-        @Override
-        public void run() {
-            for (int i = 0; i < 10; i++) {
-                printer.printWorld();
-            }
-        }
     }
 }

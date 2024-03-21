@@ -45,6 +45,7 @@ public class Code03_LongestLessSumSubArrayLength {
 		int[] h = new int[arr.length + 1];
 		int sum = 0;
 		h[0] = sum;
+		//h[i]中存放到当前位置为止，前缀和的最大值
 		for (int i = 0; i != arr.length; i++) {
 			sum += arr[i];
 			h[i + 1] = Math.max(sum, h[i]);
@@ -53,6 +54,11 @@ public class Code03_LongestLessSumSubArrayLength {
 		int res = 0;
 		int pre = 0;
 		int len = 0;
+		//思路是到每一个位置时，当前为sum，如果有一个前缀和恰好为sum - k, 则=k.
+		/*
+		 * 前缀和是sum,当前值是k，要求sum - x <= k. 则x>=sum - k
+		 * 要求在其前面，从0开始的前缀和，大于sum - k，且为首次出现。 6 5  7 8
+		 */
 		for (int i = 0; i != arr.length; i++) {
 			sum += arr[i];
 			pre = getLessIndex(h, sum - k);
@@ -90,13 +96,15 @@ public class Code03_LongestLessSumSubArrayLength {
 
 	public static void main(String[] args) {
 		System.out.println("test begin");
-		for (int i = 0; i < 10000000; i++) {
-			int[] arr = generateRandomArray(10, 20);
-			int k = (int) (Math.random() * 20) - 5;
-			if (maxLengthAwesome(arr, k) != maxLength(arr, k)) {
-				System.out.println("Oops!");
-			}
-		}
+		int[] arr = {3,-1,2,1};
+		maxLength(arr,4);
+//		for (int i = 0; i < 10000000; i++) {
+//			int[] arr = generateRandomArray(10, 20);
+//			int k = (int) (Math.random() * 20) - 5;
+//			if (maxLengthAwesome(arr, k) != maxLength(arr, k)) {
+//				System.out.println("Oops!");
+//			}
+//		}
 		System.out.println("test finish");
 	}
 
